@@ -6,8 +6,8 @@
 | ----------- | ---------------------- |
 | TeamID      |        Team-065        |
 | TeamName    |        DBMaster        |
-| Captain     |                        |
-| Captain     |                        |
+| Captain     |      Chien-Kai Kuo     |
+| Captain     |   ck65@illinois.edu    |
 | Member1     |                        |
 | Member1     |                        |
 | Member2     |      Sheng-Min Lin     |
