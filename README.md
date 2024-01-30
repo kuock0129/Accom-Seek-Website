@@ -1,1 +1,1 @@
-# sp24-cs411-team065-DBMaster
+# team065-DBMaster
