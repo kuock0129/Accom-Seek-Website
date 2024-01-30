@@ -10,7 +10,7 @@
 | Captain     |                        |
 | Member1     |                        |
 | Member1     |                        |
-| Member2     |                        |
-| Member2     |                        |
+| Member2     |      Sheng-Min Lin     |
+| Member2     |  smlin3@illinois.edu   |
 | Member3     |        Si-An Chen      |
 | Member3     |   sianc2@illinois.edu  |
