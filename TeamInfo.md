@@ -20,10 +20,10 @@
 
 |   Info      |        Description     |
 | ----------- | ---------------------- |
-|  Title      |       ProjectTitle     |
+|  Title      |       AccommoSeek      |
 | System URL  |      link_to_system    |
 | Video Link  |      link_to_video     |
 
 ## Project Summary
 
-This is a summary of the project!
+AccommoSeek is a sophisticated web application designed to help users discover the perfect accommodations tailored to their individual preferences. It offers a highly customizable search experience, allowing users to apply filters such as city, accommodation type, ratings, reviews, desired temperature, travel budget, and more, ensuring the recommendations align closely with their needs. Additionally, the platform allows users to share their experiences by posting reviews and rating their stays across various aspects, further enriching the community's wealth of information and assisting others in making informed decisions.
