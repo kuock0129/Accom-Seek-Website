@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post List</title>
+</head>
+<body>
+    <h1>Blog Post List</h1>
+    <ul>
+        {% for post in blog_posts %}
+            <li>
+                <strong>ID: {{ post.id }}</strong><br>
+                <strong>{{ post.title }}</strong> by {{ post.author }}<br>
+                {{ post.content }}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
