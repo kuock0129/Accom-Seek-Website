@@ -10,6 +10,7 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+        <p>Post as {{ user.username }}</p>
         <input type="submit" value="Submit">
         {% if post.id %}
         <a href="{% url 'delete_post' post.id %}">Delete</a>

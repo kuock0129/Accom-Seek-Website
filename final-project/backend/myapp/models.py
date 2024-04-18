@@ -1,18 +1,19 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
-class Author(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.EmailField()
+# class Author(models.Model):
+#     name = models.CharField(max_length=100)
+#     email = models.EmailField()
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 class BlogPost(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
     publication_date = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
@@ -23,6 +24,7 @@ class BlogPost(models.Model):
 #     living_wage = models.FloatField(db_column='LivingWage')
 #     population = models.IntegerField(db_column='Population')
 #     crime_frequency = models.FloatField(db_column='CrimeFrequency')
+
 
 #     class Meta:
 #         managed = False
@@ -50,13 +52,13 @@ class BlogPost(models.Model):
 #     text = models.CharField(max_length=1024, db_column='Text')
 #     rating = models.FloatField(db_column='Rating')
 #     date = models.DateTimeField(db_column='Date')
-#     hotel = models.ForeignKey('Hotel', to_field='name', db_column='HotelName', on_delete=models.CASCADE, null=False)
-#     city = models.ForeignKey('City', to_field='name', db_column='CityName', on_delete=models.CASCADE, null=False)
+#     hotel = models.ForeignKey('Hotel', to_field='name', db_column='Name', on_delete=models.CASCADE, null=False, related_name='reviews')
+#     city = models.ForeignKey('Hotel', to_field='city', db_column='CityName', on_delete=models.CASCADE, null=False)
 
 #     class Meta:
 #         managed = False
 #         db_table = 'Review'
-#         unique_together = (('user_name', 'hotel', 'city'),)
+#         unique_together = (('user_name', 'hotel', 'city'),('hotel', 'city'))
 
 #     def __str__(self):
 #         return self.title
@@ -76,7 +78,7 @@ class BlogPost(models.Model):
 #         return f"{self.city} {self.month}/{self.year}"
     
 # class Precipitation(models.Model):
-#     city_state = models.ForeignKey('City', to_field='state', db_column='CityState', on_delete=models.CASCADE, null=False)
+#     city_state = models.CharField(max_length=255, db_column='State', null=False)
 #     month = models.IntegerField(db_column='Month', null=False)
 #     precipitation = models.FloatField(db_column='Precipitation')
 
