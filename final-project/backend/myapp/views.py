@@ -4,9 +4,12 @@ from django.template import loader
 from .models import BlogPost
 from .forms import BlogPostForm
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponseRedirect
 import os
 import pymysql
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.contrib.auth import authenticate, login as auth_login
 from dotenv import load_dotenv
 #git clone https://Patrick8894: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@github.com/cs411-alawini/sp24-cs411-team065-DBMaster.git
 
@@ -67,15 +70,18 @@ def test_db(request):
         with connection.cursor() as cursor:
             temp_min = 10
             temp_max = 20
+            # sql = """
+            # SELECT H.CityName, H.Name 
+            # FROM Temperature T 
+            # JOIN City C ON T.CityName = C.Name 
+            # JOIN Hotel H ON C.Name = H.CityName 
+            # WHERE Temperature > %s AND Temperature < %s 
+            # LIMIT 10;
+            # """
+            # cursor.execute(sql, (temp_min, temp_max))
             sql = """
-            SELECT H.CityName, H.Name 
-            FROM Temperature T 
-            JOIN City C ON T.CityName = C.Name 
-            JOIN Hotel H ON C.Name = H.CityName 
-            WHERE Temperature > %s AND Temperature < %s 
-            LIMIT 10;
+            SELECT * FROM Hotel;
             """
-            cursor.execute(sql, (temp_min, temp_max))
             result = cursor.fetchall()
             print(result)
             return redirect('blog_post_list')
@@ -83,4 +89,31 @@ def test_db(request):
         connection.close()
 
 def login(request):
-    return render(request, 'login.html')
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            auth_login(request, user)
+            return HttpResponseRedirect('/posts/')
+        else:
+            return render(request, 'login.html', {'error': 'Invalid username or password'})
+    else:
+        return render(request, 'login.html')
+
+def get_hotel_data(request):
+    connection = pymysql.connect(host=DB_HOST,
+                                 user=DB_USER,
+                                 password=DB_PASSWORD,
+                                 db=DB_NAME,
+                                 charset='utf8mb4',
+                                 cursorclass=pymysql.cursors.DictCursor)
+    try:
+        with connection.cursor() as cursor:
+            sql = "SELECT * FROM Hotel;"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            print(result)
+            return JsonResponse({'data': result}, safe=False)
+    finally:
+        connection.close()

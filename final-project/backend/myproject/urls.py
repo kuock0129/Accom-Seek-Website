@@ -31,4 +31,5 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('login/', views.login, name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('get_hotel_data/', views.get_hotel_data, name='get_hotel_data'),
 ]
