@@ -24,6 +24,7 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 // ];
 
 const columns: GridColDef[] = [
+<<<<<<< HEAD
   // { field: 'id', headerName: 'ID', width: 100 },
   { field: 'Name', headerName: 'Name', width: 200 },
   { field: 'Address', headerName: 'Address', width: 200 },
@@ -54,14 +55,37 @@ export default function DataTable() {
         console.log(data);
         setRows(data.data);
       });
+=======
+  { field: 'Name', headerName: 'Name', width: 200},
+  { field: 'Address', headerName: 'Address', width: 200 },
+  { field: 'CityName', headerName: 'City Name', width: 150 },
+];
+
+
+export default function DataTable() {
+  const [rows, setRows] = React.useState([]);
+
+  React.useEffect(() => {
+    fetch('http://127.0.0.1:8000/get_hotel_data/') // your API endpoint
+      .then(response => response.json())
+      .then(data => setRows(data.data));
+>>>>>>> 1597e3b (frontend update)
   }, []);
 
   return (
     <div style={{ height: 400, width: '100%' }}>
+      {/* <DataGrid rows={rows} 
+      columns={columns}
+      getRowId={(row) => row.Name}/> */}
+
       <DataGrid
         rows={rows}
         columns={columns}
         getRowId={(row) => `${row.Name}-${row.CityName}`}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1597e3b (frontend update)
         initialState={{
           pagination: {
             paginationModel: { page: 0, pageSize: 5 },

@@ -22,22 +22,6 @@ export default async function Page() {
         Accom-Seek Dashboard
       </h1>
       <Search placeholder="seach hotel" />
-      {/* <h3 className={`${lusitana.className} mb-6 text-m md:text-2xl`}>
-        Location
-      </h3>
-    
-      <Filter />
-      <h3 className={`${lusitana.className} mb-6 text-m md:text-2xl`}>
-        CrimeRate
-      </h3>
-      <Filter />
-      <h3 className={`${lusitana.className} mb-6 text-m md:text-2xl`}>
-        Participition
-      </h3>
-      <Filter />
-      <h3 className={`${lusitana.className} mb-6 text-m md:text-2xl`}>
-        Participition
-      </h3> */}
 
 
       <div style={{ height: '40px' }} />

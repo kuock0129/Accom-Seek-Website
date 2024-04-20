@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // File: /home/patrickwu8894/cs411/sp24-cs411-team065-DBMaster/final-project/frontend/app/dashboard/layout.tsx
+=======
+// File: /Users/kai/Desktop/CS411/sp24-cs411-team065-DBMaster/final-project/frontend/app/dashboard/layout.tsx
+>>>>>>> 1597e3b (frontend update)
 import * as entry from '../../../../app/dashboard/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

@@ -1,4 +1,4 @@
-// File: /home/patrickwu8894/cs411/sp24-cs411-team065-DBMaster/final-project/frontend/app/layout.tsx
+// File: /Users/kai/Desktop/CS411/sp24-cs411-team065-DBMaster/final-project/frontend/app/layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
