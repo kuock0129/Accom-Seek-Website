@@ -11,6 +11,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login as auth_login
 from dotenv import load_dotenv
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+import json
 #git clone https://Patrick8894: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@github.com/cs411-alawini/sp24-cs411-team065-DBMaster.git
 
 dotenv_path = os.path.join(os.path.dirname(__file__), 'db.env')
@@ -114,6 +118,39 @@ def get_hotel_data(request):
             cursor.execute(sql)
             result = cursor.fetchall()
             print(result)
+            return JsonResponse({'data': result}, safe=False)
+    finally:
+        connection.close()
+
+
+
+@csrf_exempt  # Disable CSRF token for demonstration purposes only
+@require_http_methods(["POST"])
+def search_hotel_data(request):
+    # Get the search term from the POST data
+    try:
+        search_data = json.loads(request.body.decode('utf-8'))
+        search_query = search_data.get('search', '')
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+    connection = pymysql.connect(
+        host=DB_HOST,
+        user=DB_USER,
+        password=DB_PASSWORD,
+        db=DB_NAME,
+        charset='utf8mb4',
+        cursorclass=pymysql.cursors.DictCursor
+    )
+
+    try:
+        with connection.cursor() as cursor:
+            sql = """
+            SELECT * FROM Hotel
+            WHERE Name LIKE %s OR CityName LIKE %s;
+            """
+            cursor.execute(sql, ('%' + search_query + '%', '%' + search_query + '%'))
+            result = cursor.fetchall()
             return JsonResponse({'data': result}, safe=False)
     finally:
         connection.close()
