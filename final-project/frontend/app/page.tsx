@@ -18,7 +18,7 @@ export default function Page() {
           <p className={`text-xl text-gray-800 md:text-3xl md:leading-normal`}>
             <strong>Welcome to Accom-Seek.</strong> This is the Search Engine for the{' '}
             <a href="http://localhost:3000/dashboard" className="text-orange-500">
-              Comfortable and Afforable Hotel Website.
+              Comfortable and Afforable Hotel.
             </a>
           </p>
           <Link
