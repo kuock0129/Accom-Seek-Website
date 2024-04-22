@@ -1,3 +1,5 @@
+'use client';
+
 import { Card } from '@/app/ui/dashboard/cards';
 import RevenueChart from '@/app/ui/dashboard/revenue-chart';
 import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
@@ -13,9 +15,10 @@ import Search from '@/app/ui/search';
 
 
 
-export default async function Page() {
-  // const revenue = await fetchRevenue();
-  // const latestInvoices = await fetchLatestInvoices();
+export default function Page({params}: {params: any}) {
+  const path = decodeURIComponent(params.reviews);
+  const [hotelName, cityName] = path.split('_');
+  console.log(hotelName, cityName);
   return (
     <main>
       <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
@@ -23,9 +26,8 @@ export default async function Page() {
       </h1>
       {/* <Search placeholder="seach hotel" />
 
-
       <div style={{ height: '40px' }} /> */}
-      <ReviewTable />
+      <ReviewTable hotelName={hotelName} cityName={cityName} />
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {/*頁面是一個非同步元件。這允許您使用await來獲取數據。 */}
         {/* <Card title="Collected" value={totalPaidInvoices} type="collected" /> */}

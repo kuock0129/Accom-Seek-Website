@@ -33,5 +33,5 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('get_hotel_data/', views.get_hotel_data, name='get_hotel_data'),
     path('search_hotel_data/', views.search_hotel_data, name='search_hotel_data'),
-
+    path('get_review_data/', views.get_review_data, name='get_review_data'),
 ]

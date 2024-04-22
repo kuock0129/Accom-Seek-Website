@@ -117,17 +117,43 @@ def get_hotel_data(request):
             sql = "SELECT * FROM Hotel;"
             cursor.execute(sql)
             result = cursor.fetchall()
-            print(result)
+            # print(result)
             return JsonResponse({'data': result}, safe=False)
     finally:
         connection.close()
 
-
+@csrf_exempt  # Disable CSRF token for demonstration purposes only
+@require_http_methods(["POST"])
+def get_review_data(request):
+    connection = pymysql.connect(host=DB_HOST,
+                                 user=DB_USER,
+                                 password=DB_PASSWORD,
+                                 db=DB_NAME,
+                                 charset='utf8mb4',
+                                 cursorclass=pymysql.cursors.DictCursor)
+    try:
+        query_data = json.loads(request.body.decode('utf-8'))
+        hotel_name = query_data.get('hotelName', '')
+        city_name = query_data.get('cityName', '')
+        with connection.cursor() as cursor:
+            if not hotel_name or not city_name:
+                sql = "SELECT * FROM Review;"
+                print('hotel_name or city_name is empty')
+                cursor.execute(sql)
+            else:
+                sql = "SELECT * FROM Review WHERE HotelName = %s AND CityName = %s;"
+                cursor.execute(sql, (hotel_name, city_name))
+            result = cursor.fetchall()
+            # print(result)
+            return JsonResponse({'data': result}, safe=False)
+    finally:
+        connection.close()
 
 @csrf_exempt  # Disable CSRF token for demonstration purposes only
 @require_http_methods(["POST"])
 def search_hotel_data(request):
     # Get the search term from the POST data
+    print('search_hotel_data')
     try:
         search_data = json.loads(request.body.decode('utf-8'))
         search_query = search_data.get('search', '')
