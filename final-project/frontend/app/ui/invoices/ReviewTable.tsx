@@ -16,7 +16,7 @@ const columns: GridColDef[] = [
   { field: 'CityName', headerName: 'City Name', width: 150 },
 ];
 
-export default function DataTable({ hotelName, cityName }) {
+export default function DataTable({ hotelName, cityName }: { hotelName: string, cityName: string }) {
   const [rows, setRows] = React.useState([]);
 
   React.useEffect(() => {
