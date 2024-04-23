@@ -41,11 +41,11 @@ Follow these steps to set up your environment and start the server:
 
 ### 2. Install Python dependencies
 ```
-pip3 install -r requirements.txt
+pip3 install -r requirement.txt
 ```
 
 ### 3. Environment Configuration
-Make sure you add `db.env` into the project folder. This file should contain all necessary environment variables for database configuration.
+Make sure you add `db.env` into the `/myapp` folder. This file should contain all necessary environment variables for database configuration.
 
 ## Start the Server
 Run the Django server
