@@ -12,6 +12,14 @@ To install the necessary dependencies, follow these steps:
 npm install
 ```
 
+### Environment Configuration
+
+Make sure you add `.env.local` into the frontend folder. This file should contain all necessary environment variables for local server.
+
+```
+NEXT_PUBLIC_API_URL=127.0.0.1:8000
+```
+
 ### Running the Development Server
 
 Once the installation is complete, you can start the development server:
