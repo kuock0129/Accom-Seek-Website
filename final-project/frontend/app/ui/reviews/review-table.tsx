@@ -2,8 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import Search from '@/app/ui/search';
-import { getHotelData, searchHotelData, getReviewData} from '../../api'; // 
+import { getReviewData } from '@/lib/api';
 
 
 const columns: GridColDef[] = [
@@ -11,12 +10,12 @@ const columns: GridColDef[] = [
   { field: 'Title', headerName: 'Title', width: 200 },
   { field: 'Text', headerName: 'Text', width: 500 },
   { field: 'Rating', headerName: 'Rating', width: 100, type: 'number' },
-  { field: 'Date', headerName: 'Date', width: 150},
+  { field: 'Date', headerName: 'Date', width: 150 },
   { field: 'HotelName', headerName: 'Hotel Name', width: 200 },
   { field: 'CityName', headerName: 'City Name', width: 150 },
 ];
 
-export default function DataTable({ hotelName, cityName }: { hotelName: string, cityName: string }) {
+export default function ReviewTable({ hotelName, cityName }: { hotelName: string, cityName: string }) {
   const [rows, setRows] = React.useState([]);
 
   React.useEffect(() => {
@@ -32,7 +31,7 @@ export default function DataTable({ hotelName, cityName }: { hotelName: string, 
   // Update the search term when the user types in the search box
 
   return (
-    <div style={{width: '100%' }}>
+    <div style={{ width: '100%' }}>
       <DataGrid
         rows={rows}
         columns={columns}

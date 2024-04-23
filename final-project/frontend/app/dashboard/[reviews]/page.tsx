@@ -1,21 +1,10 @@
 'use client';
 
-import { Card } from '@/app/ui/dashboard/cards';
-import RevenueChart from '@/app/ui/dashboard/revenue-chart';
-import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
 import { lusitana } from '@/app/ui/fonts';
 import '@fontsource/inter';
-import { fetchRevenue, fetchLatestInvoices } from '@/app/lib/data';
-import * as React from 'react';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import ReviewTable from '@/app/ui/invoices/ReviewTable';
-import Filter from '@/app/ui/dashboard/SearchBar';
-import Search from '@/app/ui/search';
+import ReviewTable from '@/app/ui/reviews/review-table';
 
-
-
-
-export default function Page({params}: {params: any}) {
+export default function Page({ params }: { params: any }) {
   const path = decodeURIComponent(params.reviews);
   const [hotelName, cityName] = path.split('_');
   console.log(hotelName, cityName);

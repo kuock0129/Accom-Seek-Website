@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Search from '@/app/ui/search';
-import { getHotelData, searchHotelData } from '../../api'; // 
+import { getHotelData, searchHotelData } from '../../lib/api'; // 
 import Select from 'react-select';
 const columns: GridColDef[] = [
-  { field: 'Name', headerName: 'Name', width: 200},
+  { field: 'Name', headerName: 'Name', width: 200 },
   { field: 'Address', headerName: 'Address', width: 200 },
   { field: 'CityName', headerName: 'City Name', width: 150 },
 ];
@@ -68,7 +68,7 @@ export default function DataTable() {
   };
 
   return (
-    <div style={{width: '100%' }}>
+    <div style={{ width: '100%' }}>
 
       <Search
         placeholder="Search hotels..."
@@ -82,20 +82,20 @@ export default function DataTable() {
 
       <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
         <div style={{ width: '100px' }}>
-          <Select 
-            options={livingWageOption} 
-            value={selectedLivingWageOption} 
-            onChange={handleLivingWageChange} 
+          <Select
+            options={livingWageOption}
+            value={selectedLivingWageOption}
+            onChange={handleLivingWageChange}
             isSearchable={false}
             isClearable={false}
             instanceId="living-wage-select"
           />
         </div>
         <div style={{ width: '100px' }}>
-          <Select 
-            options={crimeRateOption} 
-            value={selectedCrimeRateOption} 
-            onChange={handleCrimeRateChange} 
+          <Select
+            options={crimeRateOption}
+            value={selectedCrimeRateOption}
+            onChange={handleCrimeRateChange}
             isSearchable={false}
             isClearable={false}
             instanceId="crime-rate-select"
