@@ -44,7 +44,7 @@ export default function DataTable() {
 
   const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Prevent the default form submit action
-    searchHotelData(searchTerm).then(data => {
+    searchHotelData(searchTerm, {}).then(data => {
       if (data) {
         setRows(data);
       }
@@ -52,15 +52,15 @@ export default function DataTable() {
   };
   // Update the search term when the user types in the search box
 
-  const handleLivingWageChange = (selectedOption) => {
+  const handleLivingWageChange = (selectedOption: any) => {
     setSelectedLivingWageOption(selectedOption);
   };
 
-  const handleCrimeRateChange = (selectedOption) => {
+  const handleCrimeRateChange = (selectedOption: any) => {
     setSelectedCrimeRateOption(selectedOption);
   };
 
-  const handleRowClick = (params) => {
+  const handleRowClick = (params: { row: { Name: string | number | boolean; CityName: string | number | boolean; }; }) => {
     const hotelName = encodeURIComponent(params.row.Name);
     const cityName = encodeURIComponent(params.row.CityName);
     const path = `/dashboard/${hotelName}_${cityName}`;
@@ -68,10 +68,7 @@ export default function DataTable() {
   };
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
-      {/* <DataGrid rows={rows} 
-      columns={columns}
-      getRowId={(row) => row.Name}/> */}
+    <div style={{width: '100%' }}>
 
       <Search
         placeholder="Search hotels..."
@@ -84,31 +81,27 @@ export default function DataTable() {
       <div style={{ height: '10px' }} />
 
       <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
-      <Select 
-        options={livingWageOption} 
-        value={selectedLivingWageOption} 
-        onChange={handleLivingWageChange} 
-        style={{ width: '100px' }} 
-        isSearchable={false}
-        isClearable={false}
-        instanceId="living-wage-select"
-      />
-      <Select 
-        options={crimeRateOption} 
-        value={selectedCrimeRateOption} 
-        onChange={handleCrimeRateChange} 
-        style={{ width: '100px' }} 
-        isSearchable={false}
-        isClearable={false}
-        instanceId="crime-rate-select"
-      />
-      <input 
-        type="number" 
-        placeholder="Enter an integer" 
-        style={{ width: '100px', margin: '0 10px' }} 
-      />
+        <div style={{ width: '100px' }}>
+          <Select 
+            options={livingWageOption} 
+            value={selectedLivingWageOption} 
+            onChange={handleLivingWageChange} 
+            isSearchable={false}
+            isClearable={false}
+            instanceId="living-wage-select"
+          />
+        </div>
+        <div style={{ width: '100px' }}>
+          <Select 
+            options={crimeRateOption} 
+            value={selectedCrimeRateOption} 
+            onChange={handleCrimeRateChange} 
+            isSearchable={false}
+            isClearable={false}
+            instanceId="crime-rate-select"
+          />
+        </div>
       </div>
-
       <DataGrid
         className="cursor-pointer"
         rows={rows}
@@ -117,7 +110,7 @@ export default function DataTable() {
         onRowClick={handleRowClick}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
+            paginationModel: { page: 0, pageSize: 10 },
           },
         }}
         pageSizeOptions={[5, 10]}
