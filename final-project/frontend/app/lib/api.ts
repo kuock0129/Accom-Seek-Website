@@ -1,9 +1,6 @@
-
-
 const getReviewData = async (hotelName: any, cityName: any) => {
   const url = `http://${process.env.NEXT_PUBLIC_API_URL}/get_review_data/`;
-  // console.log(hotelName)
-  // console.log(cityName)
+
   try {
     const response = await fetch(url, {
       method: 'POST',

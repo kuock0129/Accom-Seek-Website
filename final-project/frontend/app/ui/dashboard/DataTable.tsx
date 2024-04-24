@@ -1,9 +1,11 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+
+import { useEffect, useState } from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import Search from '@/app/ui/search';
-import { getHotelData, searchHotelData } from '../../lib/api'; // 
+import Search from '@/app/ui/dashboard/search';
+import { getHotelData, searchHotelData } from '@/lib/api';
 import Select from 'react-select';
+
 const columns: GridColDef[] = [
   { field: 'Name', headerName: 'Name', width: 200 },
   { field: 'Address', headerName: 'Address', width: 200 },
@@ -23,12 +25,13 @@ const livingWageOption = [
 ];
 
 export default function DataTable() {
-  const [rows, setRows] = React.useState([]);
+  const [rows, setRows] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedLivingWageOption, setSelectedLivingWageOption] = React.useState(null);
-  const [selectedCrimeRateOption, setSelectedCrimeRateOption] = React.useState(null);
+  const [selectedLivingWageOption, setSelectedLivingWageOption] = useState(null);
+  const [selectedCrimeRateOption, setSelectedCrimeRateOption] = useState(null);
 
-  React.useEffect(() => {
+
+  useEffect(() => {
     getHotelData().then(data => {
       if (data) {
         setRows(data);
@@ -66,6 +69,7 @@ export default function DataTable() {
     const path = `/dashboard/${hotelName}_${cityName}`;
     window.location.href = path;
   };
+
 
   return (
     <div style={{ width: '100%' }}>

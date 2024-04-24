@@ -1,9 +1,8 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { getReviewData } from '@/lib/api';
-
 
 const columns: GridColDef[] = [
   { field: 'UserName', headerName: 'User Name', width: 200 },
@@ -15,20 +14,34 @@ const columns: GridColDef[] = [
   { field: 'CityName', headerName: 'City Name', width: 150 },
 ];
 
-export default function ReviewTable({ hotelName, cityName }: { hotelName: string, cityName: string }) {
-  const [rows, setRows] = React.useState([]);
+interface ReviewTableProps {
+  hotelName: string;
+  cityName: string;
+}
 
-  React.useEffect(() => {
-    getReviewData(hotelName, cityName).then(data => {
-      if (data) {
-        setRows(data);
+export default function ReviewTable({ hotelName, cityName }: ReviewTableProps) {
+  const [rows, setRows] = useState([]);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getReviewData(hotelName, cityName);
+        if (data) {
+          setRows(data);
+        }
+      } catch (err) {
+        setError('Failed to fetch data');
+        console.error(err);
       }
-    });
+    };
+
+    fetchData();
   }, [hotelName, cityName]);
 
-
-  // 0420 kuock0129// Update the search term when the user types in the search box
-  // Update the search term when the user types in the search box
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div style={{ width: '100%' }}>
