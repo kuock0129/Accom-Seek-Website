@@ -4,6 +4,7 @@ import { lusitana } from '@/app/ui/fonts';
 import '@fontsource/inter';
 import ReviewTable from '@/app/ui/reviews/review-table';
 
+// TODO: Consider deleting all reviews page and only show hotel reviews in the hotel page.
 export default function Page({ params }: { params: any }) {
   const path = decodeURIComponent(params.reviews);
   const [hotelName, cityName] = path.split('_');

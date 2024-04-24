@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Search from '@/app/ui/dashboard/search';
-import { getHotelData, searchHotelData } from '@/lib/api';
+import { getHotelData, searchHotelData } from '@/client/api';
 import Select from 'react-select';
 
 const columns: GridColDef[] = [

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { getReviewData } from '@/lib/api';
+import { getReviewData } from '@/client/api';
 
 const columns: GridColDef[] = [
   { field: 'UserName', headerName: 'User Name', width: 200 },

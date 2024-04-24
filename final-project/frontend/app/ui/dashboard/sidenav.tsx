@@ -7,7 +7,7 @@ export default function SideNav() {
   return (
     <div className="flex h-full flex-col px-3 py-4 md:px-2">
       <Link
-        className="mb-2 flex h-20 items-end justify-start rounded-md md:h-40"style={{ backgroundImage: `url(../photo/newyork.jpeg)`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+        className="mb-2 flex h-20 items-end justify-start rounded-md md:h-40" style={{ backgroundImage: `url(../photo/newyork.jpeg)`, backgroundSize: 'cover', backgroundPosition: 'center' }}
         href="http://localhost:3000/"
       >
         <div className="w-32 text-white md:w-40">
