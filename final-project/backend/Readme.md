@@ -33,6 +33,7 @@ Follow these steps to set up your environment and start the server:
 1. Install MariaDB development files:
     ```
     sudo apt-get install libmariadb-dev
+    sudo apt install pkg-config
     ```
 2. Install MySQL client library:
     ```
