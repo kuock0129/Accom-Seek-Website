@@ -3,7 +3,7 @@
 import { lusitana } from '@/app/ui/fonts';
 import '@fontsource/inter';
 import ReviewTable from '@/app/ui/reviews/review-table';
-import Calendar from '@/app/ui/reviews/calender';
+import { CalendarUI } from '@/app/ui/reviews/calender';
 import { Fragment, useState } from 'react'
 import { Dialog, Popover, RadioGroup, Tab, Transition } from '@headlessui/react'
 import {
@@ -293,10 +293,10 @@ export default function Page({ params }: { params: any }) {
                 </RadioGroup>
               </div>
 
-              {/* <div>
-                <Calendar/>
+              {<div>
+                <CalendarUI/>
               </div>
-               */}
+              }
               
 
               <button
