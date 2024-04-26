@@ -24,11 +24,18 @@ const livingWageOption = [
   { value: 3, label: 'High' },
 ];
 
+const precipitationOption = [
+  { value: 1, label: 'Default' },
+  { value: 2, label: 'Medium' },
+  { value: 3, label: 'High' },
+];
+
 export default function DataTable() {
   const [rows, setRows] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedLivingWageOption, setSelectedLivingWageOption] = useState(null);
-  const [selectedCrimeRateOption, setSelectedCrimeRateOption] = useState(null);
+  const [selectedLivingWageOption, setSelectedLivingWageOption] = useState(livingWageOption[0]);
+  const [selectedCrimeRateOption, setSelectedCrimeRateOption] = useState(crimeRateOption[0]);
+  const [selectedPrecipitationOption, setSelectedPrecipitationOption] = useState(precipitationOption[0]);
 
 
   useEffect(() => {
@@ -47,7 +54,7 @@ export default function DataTable() {
 
   const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Prevent the default form submit action
-    searchHotelData(searchTerm, {}).then(data => {
+    searchHotelData(searchTerm, selectedLivingWageOption, selectedCrimeRateOption, selectedPrecipitationOption).then(data => {
       if (data) {
         setRows(data);
       }
@@ -61,6 +68,10 @@ export default function DataTable() {
 
   const handleCrimeRateChange = (selectedOption: any) => {
     setSelectedCrimeRateOption(selectedOption);
+  };
+
+  const handlePrecipitationChange = (selectedOption: any) => {
+    setSelectedPrecipitationOption(selectedOption);
   };
 
   const handleRowClick = (params: { row: { Name: string | number | boolean; CityName: string | number | boolean; }; }) => {
@@ -85,7 +96,7 @@ export default function DataTable() {
       <div style={{ height: '10px' }} />
 
       <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
-        <div style={{ width: '100px' }}>
+        <div style={{ width: '200px' }}>
           <Select
             options={livingWageOption}
             value={selectedLivingWageOption}
@@ -95,7 +106,17 @@ export default function DataTable() {
             instanceId="living-wage-select"
           />
         </div>
-        <div style={{ width: '100px' }}>
+        <div style={{ width: '200px' }}>
+          <Select
+            options={precipitationOption}
+            value={selectedPrecipitationOption}
+            onChange={handlePrecipitationChange}
+            isSearchable={false}
+            isClearable={false}
+            instanceId="precipitation-select"
+          />
+        </div>
+        <div style={{ width: '200px' }}>
           <Select
             options={crimeRateOption}
             value={selectedCrimeRateOption}

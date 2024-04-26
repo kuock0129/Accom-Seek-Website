@@ -157,6 +157,9 @@ def search_hotel_data(request):
     try:
         search_data = json.loads(request.body.decode('utf-8'))
         search_query = search_data.get('search', '')
+        living_Wage = search_data.get('livingWage', '')
+        crime_rate = search_data.get('crimeRate', '')
+        precipitation = search_data.get('precipitation', '')
     except json.JSONDecodeError:
         return JsonResponse({'error': 'Invalid JSON'}, status=400)
 
@@ -168,7 +171,9 @@ def search_hotel_data(request):
         charset='utf8mb4',
         cursorclass=pymysql.cursors.DictCursor
     )
-
+    print("living_rate:", living_Wage)
+    print("crime_rate:", crime_rate)
+    print("precipitation:", precipitation)
     try:
         with connection.cursor() as cursor:
             sql = """
