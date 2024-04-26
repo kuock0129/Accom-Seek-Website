@@ -119,6 +119,41 @@ def get_hotel_data(request):
             result = cursor.fetchall()
             # print(result)
             return JsonResponse({'data': result}, safe=False)
+        
+            # args = [3, 1, 0]
+            # result_args = cursor.callproc('DividePrecipitation', args)
+            # connection.commit()
+            # cursor.execute('SELECT @_DividePrecipitation_2')
+            # output_values = cursor.fetchone()
+            # return JsonResponse({'data': output_values}, safe=False)
+        
+            # args = [3, 1, 0]
+            # result_args = cursor.callproc('DivideLivingWage', args)
+            # connection.commit()
+            # cursor.execute('SELECT @_DivideLivingWage_2')
+            # output_values = cursor.fetchone()
+            # return JsonResponse({'data': output_values}, safe=False)
+        
+            # args = [3, 1, 0]
+            # result_args = cursor.callproc('DivideCrimeRate', args)
+            # connection.commit()
+            # cursor.execute('SELECT @_DivideCrimeRate_2')
+            # output_values = cursor.fetchone()
+            # return JsonResponse({'data': output_values}, safe=False)
+
+            # monthMin = 1
+            # monthMax = 3
+            # tempMin = 0
+            # tempMax = 20
+            # precipMax = 1000
+            # crimeMax = 3000
+            # wageMax = 100
+            # args = [monthMin, monthMax, tempMin, tempMax, precipMax, crimeMax, wageMax]
+            # result_args = cursor.callproc('Search', args)
+            # connection.commit()
+            # result = cursor.fetchall()
+            # print(result)
+            # return JsonResponse({'data': result}, safe=False)
     finally:
         connection.close()
 
