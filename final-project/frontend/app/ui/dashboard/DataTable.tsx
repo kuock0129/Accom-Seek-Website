@@ -114,7 +114,7 @@ export default function DataTable() {
         onRowClick={handleRowClick}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 10 },
+            paginationModel: { page: 0, pageSize: 3 },
           },
         }}
         pageSizeOptions={[5, 10]}
