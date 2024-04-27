@@ -5,7 +5,10 @@ import '@fontsource/inter';
 import ReviewTable from '@/app/ui/reviews/review-table';
 import { CalendarUI } from '@/app/ui/reviews/calender';
 import { useEffect, useState } from 'react'
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import { Dialog, Popover, RadioGroup, Tab, Transition } from '@headlessui/react'
+import AddReviewPopup from '@/app/ui/reviews/pop-up-form';
 import {
   Bars3Icon,
   CurrencyDollarIcon,
@@ -82,8 +85,8 @@ interface Review {
   Rating: number;
   Text: string;
   Date: any;
-  // totalCount: number;
-  // featured: Review[];
+  // HotelName: number;
+  // CityName: string;
 }
 
 
@@ -111,6 +114,18 @@ export default function Page({ params }: { params: any }) {
   //
   const averageRating = Math.round(reviews.reduce((sum, review) => sum + review.Rating, 0) * 10 / reviews.length) / 10;
   const totalCount = reviews.length;
+
+
+  // New Add 0427 kuock0129
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  // New Add 0427 kuock0129
   
   
   
@@ -352,9 +367,12 @@ export default function Page({ params }: { params: any }) {
           <h2 id="reviews-heading" className="text-lg font-medium text-gray-900">
             Recent reviews
           </h2>
+            
+          
 
           <div className="mt-6 space-y-10 divide-y divide-gray-200 border-b border-t border-gray-200 pb-10">
             {reviews.map((review) => (
+            
               <div key={review.UserName} className="pt-10 lg:grid lg:grid-cols-12 lg:gap-x-8">
                 <div className="lg:col-span-8 lg:col-start-5 xl:col-span-9 xl:col-start-4 xl:grid xl:grid-cols-3 xl:items-start xl:gap-x-8">
                   <div className="flex items-center xl:col-span-1">
@@ -383,8 +401,19 @@ export default function Page({ params }: { params: any }) {
                       className="mt-3 space-y-6 text-sm text-gray-500"
                       dangerouslySetInnerHTML={{ __html: review.Text }}
                     />
+                    <div className='flex gap-2 mt-3'>
+                    <Button variant="outlined" color="primary" onClick={handleClickOpen}> Edit</Button>
+                    <Button variant="outlined" color="error" onClick={handleClickOpen}> Delete</Button>
+                    <Button variant="contained" onClick={() => setOpen(true)}>Add Review</Button>
+                    <Dialog open={open} onClose={() => setOpen(false)}>
+                      <AddReviewPopup/>
+                    </Dialog>
+                    </div>
                   </div>
+                  
                 </div>
+                
+                
 
                 <div className="mt-6 flex items-center text-sm lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:mt-0 lg:flex-col lg:items-start xl:col-span-3">
                   <p className="font-medium text-gray-900">{review.UserName}</p>
