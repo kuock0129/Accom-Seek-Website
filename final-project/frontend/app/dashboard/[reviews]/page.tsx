@@ -109,7 +109,7 @@ export default function Page({ params }: { params: any }) {
   // 
   const [reviews, setReview] = useState<Review[]>([]);
   //
-  const averageRating = reviews.reduce((sum, review) => sum + review.Rating, 0) / reviews.length;
+  const averageRating = Math.round(reviews.reduce((sum, review) => sum + review.Rating, 0) * 10 / reviews.length) / 10;
   const totalCount = reviews.length;
   
   

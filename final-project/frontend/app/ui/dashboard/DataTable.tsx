@@ -5,6 +5,7 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Search from '@/app/ui/dashboard/search';
 import { getHotelData, searchHotelData } from '@/client/api';
 import Select from 'react-select';
+import { debounce } from 'lodash';
 
 const columns: GridColDef[] = [
   { field: 'Name', headerName: 'Name', width: 500 },
@@ -44,10 +45,10 @@ export default function DataTable() {
       if (data) {
         // console.log(data);
         const mappedData = data.map((item: any) => ({
-          Name: item['HotelName'],
+          Name: item['Name'],
           Address: item['Address'],
           CityName: item['CityName'],
-          Rating: item['AVG(R.Rating)'],
+          Rating: Math.round(item['Rating'] * 10) / 10,
         }));
         // console.log(mappedData);
         setRows(mappedData);
@@ -60,22 +61,24 @@ export default function DataTable() {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
-
-  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Prevent the default form submit action
+  
+  const debouncedSearch = debounce(() => {
     searchHotelData(searchTerm, selectedLivingWageOption, selectedCrimeRateOption, selectedPrecipitationOption).then(data => {
       if (data) {
-        console.log(data);
         const mappedData = data.map((item: any) => ({
-          Name: item['HotelName'],
+          Name: item['Name'],
           Address: item['Address'],
           CityName: item['CityName'],
-          Rating: item['AVG(R.Rating)'],
+          Rating: Math.round(item['Rating'] * 10) / 10,
         }));
-        console.log(mappedData);
         setRows(mappedData);
       }
     });
+  }, 1000);
+  
+  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Prevent the default form submit action
+    debouncedSearch();
   };
   // Update the search term when the user types in the search box
 
