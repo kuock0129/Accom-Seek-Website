@@ -25,6 +25,46 @@ DB_USER = os.getenv('DB_USER')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_NAME = os.getenv('DB_NAME')
 
+living_wage_threshold = {}
+crime_rate_threshold = {}
+precipitation_threshold = {}
+
+def initialize():
+    global living_wage_threshold, crime_rate_threshold, precipitation_threshold
+    connection = pymysql.connect(host=DB_HOST,
+                                    user=DB_USER,
+                                    password=DB_PASSWORD,
+                                    db=DB_NAME,
+                                    charset='utf8mb4',
+                                    cursorclass=pymysql.cursors.DictCursor)
+    with connection.cursor() as cursor:
+        for i in range(3):
+            args = [3, i, 0]
+            cursor.callproc('DividePrecipitation', args)
+            connection.commit()
+            cursor.execute('SELECT @_DividePrecipitation_2')
+            output_values = cursor.fetchone()
+            precipitation_threshold[i] = output_values["@_DividePrecipitation_2"]
+
+            cursor.callproc('DivideLivingWage', args)
+            connection.commit()
+            cursor.execute('SELECT @_DivideLivingWage_2')
+            output_values = cursor.fetchone()
+            living_wage_threshold[i] = output_values["@_DivideLivingWage_2"]
+
+            cursor.callproc('DivideCrimeRate', args)
+            connection.commit()
+            cursor.execute('SELECT @_DivideCrimeRate_2')
+            output_values = cursor.fetchone()
+            crime_rate_threshold[i] = output_values["@_DivideCrimeRate_2"]
+    
+    print("initialize")
+    print("living_wage_threshold:", living_wage_threshold)
+    print("crime_rate_threshold:", crime_rate_threshold)
+    print("precipitation_threshold:", precipitation_threshold)
+
+initialize()
+
 def index(request):
     return HttpResponse("Hello, Django!")
 
@@ -119,41 +159,6 @@ def get_hotel_data(request):
             result = cursor.fetchall()
             # print(result)
             return JsonResponse({'data': result}, safe=False)
-        
-            # args = [3, 1, 0]
-            # result_args = cursor.callproc('DividePrecipitation', args)
-            # connection.commit()
-            # cursor.execute('SELECT @_DividePrecipitation_2')
-            # output_values = cursor.fetchone()
-            # return JsonResponse({'data': output_values}, safe=False)
-        
-            # args = [3, 1, 0]
-            # result_args = cursor.callproc('DivideLivingWage', args)
-            # connection.commit()
-            # cursor.execute('SELECT @_DivideLivingWage_2')
-            # output_values = cursor.fetchone()
-            # return JsonResponse({'data': output_values}, safe=False)
-        
-            # args = [3, 1, 0]
-            # result_args = cursor.callproc('DivideCrimeRate', args)
-            # connection.commit()
-            # cursor.execute('SELECT @_DivideCrimeRate_2')
-            # output_values = cursor.fetchone()
-            # return JsonResponse({'data': output_values}, safe=False)
-
-            # monthMin = 1
-            # monthMax = 3
-            # tempMin = 0
-            # tempMax = 20
-            # precipMax = 1000
-            # crimeMax = 3000
-            # wageMax = 100
-            # args = [monthMin, monthMax, tempMin, tempMax, precipMax, crimeMax, wageMax]
-            # result_args = cursor.callproc('Search', args)
-            # connection.commit()
-            # result = cursor.fetchall()
-            # print(result)
-            # return JsonResponse({'data': result}, safe=False)
     finally:
         connection.close()
 
@@ -187,6 +192,7 @@ def get_review_data(request):
 @csrf_exempt  # Disable CSRF token for demonstration purposes only
 @require_http_methods(["POST"])
 def search_hotel_data(request):
+    global living_wage_threshold, crime_rate_threshold, precipitation_threshold
     # Get the search term from the POST data
     print('search_hotel_data')
     try:
@@ -206,17 +212,30 @@ def search_hotel_data(request):
         charset='utf8mb4',
         cursorclass=pymysql.cursors.DictCursor
     )
-    print("living_rate:", living_Wage)
-    print("crime_rate:", crime_rate)
-    print("precipitation:", precipitation)
+    # print("living_rate:", living_Wage)
+    # print("crime_rate:", crime_rate)
+    # print("precipitation:", precipitation)
+    
     try:
         with connection.cursor() as cursor:
-            sql = """
-            SELECT * FROM Hotel
-            WHERE Name LIKE %s OR CityName LIKE %s;
-            """
-            cursor.execute(sql, ('%' + search_query + '%', '%' + search_query + '%'))
+            # sql = """
+            # SELECT * FROM Hotel
+            # WHERE Name LIKE %s OR CityName LIKE %s;
+            # """
+            # cursor.execute(sql, ('%' + search_query + '%', '%' + search_query + '%'))
+
+            monthMin = 1
+            monthMax = 12
+            tempMin = -100
+            tempMax = 100
+            precipMax = precipitation_threshold[precipitation]
+            crimeMax = crime_rate_threshold[crime_rate]
+            wageMax = living_wage_threshold[living_Wage]
+            args = [monthMin, monthMax, tempMin, tempMax, precipMax, crimeMax, wageMax]
+            cursor.callproc('Search', args)
+            connection.commit()
             result = cursor.fetchall()
+            # print(result)
             return JsonResponse({'data': result}, safe=False)
     finally:
         connection.close()

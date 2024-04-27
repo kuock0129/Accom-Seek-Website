@@ -7,27 +7,28 @@ import { getHotelData, searchHotelData } from '@/client/api';
 import Select from 'react-select';
 
 const columns: GridColDef[] = [
-  { field: 'Name', headerName: 'Name', width: 200 },
-  { field: 'Address', headerName: 'Address', width: 200 },
-  { field: 'CityName', headerName: 'City Name', width: 150 },
+  { field: 'Name', headerName: 'Name', width: 500 },
+  { field: 'Address', headerName: 'Address', width: 250 },
+  { field: 'CityName', headerName: 'City Name', width: 200 },
+  { field: 'Rating', headerName: 'Rating', width: 150 },
 ];
 
 const crimeRateOption = [
-  { value: 1, label: 'Default' },
-  { value: 2, label: 'Safe' },
-  { value: 3, label: 'Very Safe' },
+  { value: 2, label: 'Default' },
+  { value: 1, label: 'Safe' },
+  { value: 0, label: 'Very Safe' },
 ];
 
 const livingWageOption = [
-  { value: 1, label: 'Default' },
-  { value: 2, label: 'Medium' },
-  { value: 3, label: 'High' },
+  { value: 2, label: 'Default' },
+  { value: 1, label: 'Medium' },
+  { value: 0, label: 'High' },
 ];
 
 const precipitationOption = [
-  { value: 1, label: 'Default' },
-  { value: 2, label: 'Medium' },
-  { value: 3, label: 'High' },
+  { value: 2, label: 'Default' },
+  { value: 1, label: 'Moderate' },
+  { value: 0, label: 'Dry' },
 ];
 
 export default function DataTable() {
@@ -39,9 +40,17 @@ export default function DataTable() {
 
 
   useEffect(() => {
-    getHotelData().then(data => {
+    searchHotelData(searchTerm, selectedLivingWageOption, selectedCrimeRateOption, selectedPrecipitationOption).then(data => {
       if (data) {
-        setRows(data);
+        // console.log(data);
+        const mappedData = data.map((item: any) => ({
+          Name: item['HotelName'],
+          Address: item['Address'],
+          CityName: item['CityName'],
+          Rating: item['AVG(R.Rating)'],
+        }));
+        // console.log(mappedData);
+        setRows(mappedData);
       }
     });
   }, []);
@@ -56,7 +65,15 @@ export default function DataTable() {
     event.preventDefault(); // Prevent the default form submit action
     searchHotelData(searchTerm, selectedLivingWageOption, selectedCrimeRateOption, selectedPrecipitationOption).then(data => {
       if (data) {
-        setRows(data);
+        console.log(data);
+        const mappedData = data.map((item: any) => ({
+          Name: item['HotelName'],
+          Address: item['Address'],
+          CityName: item['CityName'],
+          Rating: item['AVG(R.Rating)'],
+        }));
+        console.log(mappedData);
+        setRows(mappedData);
       }
     });
   };
@@ -95,8 +112,9 @@ export default function DataTable() {
 
       <div style={{ height: '10px' }} />
 
-      <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
-        <div style={{ width: '200px' }}>
+      <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '10px', marginBottom: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', width: '250px' }}>
+          <label htmlFor="living-wage-select" style={{ marginRight: '10px' }}>Living Wage: </label>
           <Select
             options={livingWageOption}
             value={selectedLivingWageOption}
@@ -106,7 +124,8 @@ export default function DataTable() {
             instanceId="living-wage-select"
           />
         </div>
-        <div style={{ width: '200px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', width: '250px' }}>
+          <label htmlFor="precipitation-select" style={{ marginRight: '10px' }}>Precipitation</label>
           <Select
             options={precipitationOption}
             value={selectedPrecipitationOption}
@@ -116,7 +135,8 @@ export default function DataTable() {
             instanceId="precipitation-select"
           />
         </div>
-        <div style={{ width: '200px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', width: '400px' }}>
+          <label htmlFor="crime-rate-select" style={{ marginRight: '10px' }}>Crime Rate</label>
           <Select
             options={crimeRateOption}
             value={selectedCrimeRateOption}
@@ -135,7 +155,7 @@ export default function DataTable() {
         onRowClick={handleRowClick}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 3 },
+            paginationModel: { page: 0, pageSize: 5 },
           },
         }}
         pageSizeOptions={[5, 10]}
