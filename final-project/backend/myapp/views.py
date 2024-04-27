@@ -162,6 +162,10 @@ def get_hotel_data(request):
     finally:
         connection.close()
 
+
+
+
+
 @csrf_exempt  # Disable CSRF token for demonstration purposes only
 @require_http_methods(["POST"])
 def get_review_data(request):
