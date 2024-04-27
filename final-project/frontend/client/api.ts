@@ -8,6 +8,8 @@ const apiClient = axios.create({
   }
 });
 
+
+
 export const getReviewData = async (hotelName: any, cityName: any) => {
   try {
     const response = await apiClient.post('get_review_data/', { hotelName, cityName });
@@ -16,6 +18,11 @@ export const getReviewData = async (hotelName: any, cityName: any) => {
     console.error("Could not fetch review data", error);
   }
 };
+
+
+
+
+
 
 export const getHotelData = async () => {
   try {
@@ -26,14 +33,11 @@ export const getHotelData = async () => {
   }
 };
 
-export const searchHotelData = async (searchQuery: any, LivingWageOption: any, CrimeRateOption: any, PrecipitationOption: any) => {
+export const searchHotelData = async (searchQuery: any, searchFilters: any) => {
+  console.log(searchQuery);
+  console.log(searchFilters);
   try {
-    const response = await apiClient.post('search_hotel_data/', { 
-      search: searchQuery,
-      livingWage: LivingWageOption.value,
-      crimeRate: CrimeRateOption.value,
-      precipitation: PrecipitationOption.value
-    });
+    const response = await apiClient.post('search_hotel_data/', { search: searchQuery });
     return response.data.data;
   } catch (error) {
     console.error("Could not fetch hotel data", error);

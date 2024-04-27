@@ -28,3 +28,7 @@ const Search: FC<SearchProps> = ({ placeholder, value, onChange, onSubmit }) => 
 }
 
 export default Search;
+
+
+
+
