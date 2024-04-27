@@ -55,7 +55,7 @@ export function CalendarUI() {
           name="dob"
             render={({ field }: { field: any }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Date of birth</FormLabel>
+              <FormLabel>Start Date</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -87,14 +87,14 @@ export function CalendarUI() {
                   />
                 </PopoverContent>
               </Popover>
-              <FormDescription>
+              {/* <FormDescription>
                 Your date of birth is used to calculate your age.
-              </FormDescription>
+              </FormDescription> */}
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        {/* <Button type="submit">Submit</Button> */}
       </form>
     </Form>
   )

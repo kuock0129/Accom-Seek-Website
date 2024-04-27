@@ -4,7 +4,7 @@ import { lusitana } from '@/app/ui/fonts';
 import '@fontsource/inter';
 import ReviewTable from '@/app/ui/reviews/review-table';
 import { CalendarUI } from '@/app/ui/reviews/calender';
-import { Fragment, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Dialog, Popover, RadioGroup, Tab, Transition } from '@headlessui/react'
 import {
   Bars3Icon,
@@ -16,6 +16,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { StarIcon } from '@heroicons/react/20/solid'
+import { getReviewData } from '@/client/api';
 
 
 // Data
@@ -67,76 +68,29 @@ const product = {
     // 'Only the best materials',
   ],
 }
+
 const policies = [
   { name: 'International delivery', icon: GlobeAmericasIcon, description: 'Get your order in 2 years' },
   { name: 'Loyalty rewards', icon: CurrencyDollarIcon, description: "Don't look at other tees" },
 ]
-const reviews = {
-  average: 3.9,
-  totalCount: 512,
-  featured: [
-    {
-      id: 1,
-      title: "Can't say enough good things",
-      rating: 5,
-      content: `
-        <p>I was really pleased with the overall shopping experience. My order even included a little personal, handwritten note, which delighted me!</p>
-        <p>The product quality is amazing, it looks and feel even better than I had anticipated. Brilliant stuff! I would gladly recommend this store to my friends. And, now that I think of it... I actually have, many times!</p>
-      `,
-      author: 'Risako M',
-      date: 'May 16, 2021',
-      datetime: '2021-01-06',
-    },
-    // More reviews...
-  ],
+
+
+interface Review {
+
+  UserName: string;
+  Title: string;
+  Rating: number;
+  Text: string;
+  Date: any;
+  // totalCount: number;
+  // featured: Review[];
 }
-const relatedProducts = [
-  {
-    id: 1,
-    name: 'Basic Tee',
-    href: '#',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-02.jpg',
-    imageAlt: "Front of men's Basic Tee in white.",
-    price: '$35',
-    color: 'Aspen White',
-  },
-  // More products...
-]
-const footerNavigation = {
-  products: [
-    { name: 'Bags', href: '#' },
-    { name: 'Tees', href: '#' },
-    { name: 'Objects', href: '#' },
-    { name: 'Home Goods', href: '#' },
-    { name: 'Accessories', href: '#' },
-  ],
-  company: [
-    { name: 'Who we are', href: '#' },
-    { name: 'Sustainability', href: '#' },
-    { name: 'Press', href: '#' },
-    { name: 'Careers', href: '#' },
-    { name: 'Terms & Conditions', href: '#' },
-    { name: 'Privacy', href: '#' },
-  ],
-  customerService: [
-    { name: 'Contact', href: '#' },
-    { name: 'Shipping', href: '#' },
-    { name: 'Returns', href: '#' },
-    { name: 'Warranty', href: '#' },
-    { name: 'Secure Payments', href: '#' },
-    { name: 'FAQ', href: '#' },
-    { name: 'Find a store', href: '#' },
-  ],
-}
+
 
 // Functions
 function classNames(...classes:any[]) {
   return classes.filter(Boolean).join(' ')
 }
-
-
-
-
 
 
 export default function Page({ params }: { params: any }) {
@@ -146,6 +100,51 @@ export default function Page({ params }: { params: any }) {
   const [open, setOpen] = useState(false)
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
   const [selectedSize, setSelectedSize] = useState(product.sizes[2])
+  //
+  const [rows, setRows] = useState([]);
+  const [error, setError] = useState('');
+  // Interface Review
+
+
+  // 
+  const [reviews, setReview] = useState<Review[]>([]);
+  //
+  const averageRating = reviews.reduce((sum, review) => sum + review.Rating, 0) / reviews.length;
+  const totalCount = reviews.length;
+  
+  
+  
+  ///
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getReviewData(hotelName, cityName);
+        if (data) {
+          const selectreviews = data.map((review: Review) => ({
+            UserName: review.UserName,
+            Title: review.Title,
+            Rating: review.Rating,
+            Text: review.Text,
+            Date: review.Date,
+          }));
+          setReview(selectreviews);
+          console.log("Selcet", selectreviews);
+        }
+      } catch (err) {
+        setError('Failed to fetch data');
+        console.error(err);
+      }
+    };
+
+    fetchData();
+  }, [hotelName, cityName]);
+
+  ///
+
+
+
+  
+
   return (
     <>
       {/* the review page name  */}
@@ -174,7 +173,7 @@ export default function Page({ params }: { params: any }) {
               <h2 className="sr-only">Reviews</h2>
               <div className="flex items-center">
                 <p className="text-sm text-gray-700">
-                  {reviews.average}
+                  {averageRating}
                   <span className="sr-only"> out of 5 stars</span>
                 </p>
                 <div className="ml-1 flex items-center">
@@ -182,7 +181,7 @@ export default function Page({ params }: { params: any }) {
                     <StarIcon
                       key={rating}
                       className={classNames(
-                        reviews.average > rating ? 'text-yellow-400' : 'text-gray-200',
+                        averageRating > rating ? 'text-yellow-400' : 'text-gray-200',
                         'h-5 w-5 flex-shrink-0'
                       )}
                       aria-hidden="true"
@@ -194,7 +193,7 @@ export default function Page({ params }: { params: any }) {
                 </div>
                 <div className="ml-4 flex">
                   <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                    See all {reviews.totalCount} reviews
+                    See all {totalCount} reviews
                   </a>
                 </div>
               </div>
@@ -292,11 +291,9 @@ export default function Page({ params }: { params: any }) {
                   </div>
                 </RadioGroup>
               </div>
+              
+          
 
-              {<div>
-                <CalendarUI/>
-              </div>
-              }
               
 
               <button
@@ -357,8 +354,8 @@ export default function Page({ params }: { params: any }) {
           </h2>
 
           <div className="mt-6 space-y-10 divide-y divide-gray-200 border-b border-t border-gray-200 pb-10">
-            {reviews.featured.map((review) => (
-              <div key={review.id} className="pt-10 lg:grid lg:grid-cols-12 lg:gap-x-8">
+            {reviews.map((review) => (
+              <div key={review.UserName} className="pt-10 lg:grid lg:grid-cols-12 lg:gap-x-8">
                 <div className="lg:col-span-8 lg:col-start-5 xl:col-span-9 xl:col-start-4 xl:grid xl:grid-cols-3 xl:items-start xl:gap-x-8">
                   <div className="flex items-center xl:col-span-1">
                     <div className="flex items-center">
@@ -366,7 +363,7 @@ export default function Page({ params }: { params: any }) {
                         <StarIcon
                           key={rating}
                           className={classNames(
-                            review.rating > rating ? 'text-yellow-400' : 'text-gray-200',
+                            review.Rating > rating ? 'text-yellow-400' : 'text-gray-200',
                             'h-5 w-5 flex-shrink-0'
                           )}
                           aria-hidden="true"
@@ -374,101 +371,41 @@ export default function Page({ params }: { params: any }) {
                       ))}
                     </div>
                     <p className="ml-3 text-sm text-gray-700">
-                      {review.rating}
+                      {review.Rating}
                       <span className="sr-only"> out of 5 stars</span>
                     </p>
                   </div>
 
                   <div className="mt-4 lg:mt-6 xl:col-span-2 xl:mt-0">
-                    <h3 className="text-sm font-medium text-gray-900">{review.title}</h3>
+                    <h3 className="text-sm font-medium text-gray-900">{review.Title}</h3>
 
                     <div
                       className="mt-3 space-y-6 text-sm text-gray-500"
-                      dangerouslySetInnerHTML={{ __html: review.content }}
+                      dangerouslySetInnerHTML={{ __html: review.Text }}
                     />
                   </div>
                 </div>
 
                 <div className="mt-6 flex items-center text-sm lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:mt-0 lg:flex-col lg:items-start xl:col-span-3">
-                  <p className="font-medium text-gray-900">{review.author}</p>
+                  <p className="font-medium text-gray-900">{review.UserName}</p>
                   <time
-                    dateTime={review.datetime}
+                    dateTime={review.Date}
                     className="ml-4 border-l border-gray-200 pl-4 text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0"
                   >
-                    {review.date}
+                    {review.Date}
                   </time>
                 </div>
               </div>
             ))}
           </div>
         </section>
-
-        {/* Related products */}
-        {/* <section aria-labelledby="related-heading" className="mt-16 sm:mt-24">
-          <h2 id="related-heading" className="text-lg font-medium text-gray-900">
-            Customers also purchased
-          </h2>
-
-          <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {relatedProducts.map((relatedProduct) => (
-              <div key={relatedProduct.id} className="group relative">
-                <div className="min-h-80 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md lg:aspect-none group-hover:opacity-75 lg:h-80">
-                  <img
-                    src={relatedProduct.imageSrc}
-                    alt={relatedProduct.imageAlt}
-                    className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                  />
-                </div>
-                <div className="mt-4 flex justify-between">
-                  <div>
-                    <h3 className="text-sm text-gray-700">
-                      <a href={relatedProduct.href}>
-                        <span aria-hidden="true" className="absolute inset-0" />
-                        {relatedProduct.name}
-                      </a>
-                    </h3>
-                    <p className="mt-1 text-sm text-gray-500">{relatedProduct.color}</p>
-                  </div>
-                  <p className="text-sm font-medium text-gray-900">{relatedProduct.price}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section> */}
       </main>
 
-    </div>
+          </div>
         </div>
       </div>
 
 
-
-
-
-      <div className="mt-10"></div>
-
-
-
-
-      {/* the review table*/}
-      <div>
-        <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-          Reviews for {hotelName}
-        </h1>
-        <ReviewTable hotelName={hotelName} cityName={cityName} />
-      </div>
     </>
   );
 }
-//   const path = decodeURIComponent(params.reviews);
-//   const [hotelName, cityName] = path.split('_');
-
-//   return (
-//     <main>
-//       <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-//         Reviews for {hotelName}
-//       </h1>
-//       <ReviewTable hotelName={hotelName} cityName={cityName} />
-//     </main>
-//   );
-// }
