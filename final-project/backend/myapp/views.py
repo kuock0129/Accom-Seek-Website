@@ -15,6 +15,7 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import json
+from datetime import datetime
 #git clone https://Patrick8894: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@github.com/cs411-alawini/sp24-cs411-team065-DBMaster.git
 
 dotenv_path = os.path.join(os.path.dirname(__file__), 'db.env')
@@ -242,5 +243,72 @@ def search_hotel_data(request):
             result = cursor.fetchall()
             # print(result)
             return JsonResponse({'data': result}, safe=False)
+    finally:
+        connection.close()
+
+def add_review(request):
+    connection = pymysql.connect(host=DB_HOST,
+                                 user=DB_USER,
+                                 password=DB_PASSWORD,
+                                 db=DB_NAME,
+                                 charset='utf8mb4',
+                                 cursorclass=pymysql.cursors.DictCursor)
+    try:
+        query_data = json.loads(request.body.decode('utf-8'))
+        user_name = query_data.get('UserName', '')
+        title = query_data.get('Title', '')
+        text = query_data.get('Text', '')
+        rating = query_data.get('Rating', '')
+        hotel_name = query_data.get('HotelName', '')
+        city_name = query_data.get('CityName', '')
+        datetime = datetime.now()
+        with connection.cursor() as cursor:
+            sql = "INSERT INTO Review (UserName, Title, Text, Rating, Date, HotelName, CityName) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+            cursor.execute(sql, (user_name, title, text, rating, datetime, hotel_name, city_name))
+            connection.commit()
+            return JsonResponse({'status': 'success'}, status=201)
+    finally:
+        connection.close()
+def update_review(request):
+    connection = pymysql.connect(host=DB_HOST,
+                                 user=DB_USER,
+                                 password=DB_PASSWORD,
+                                 db=DB_NAME,
+                                 charset='utf8mb4',
+                                 cursorclass=pymysql.cursors.DictCursor)
+    try:
+        query_data = json.loads(request.body.decode('utf-8'))
+        user_name = query_data.get('UserName', '')
+        title = query_data.get('Title', '')
+        text = query_data.get('Text', '')
+        rating = query_data.get('Rating', '')
+        hotel_name = query_data.get('HotelName', '')
+        city_name = query_data.get('CityName', '')
+        datetime = datetime.now()
+        with connection.cursor() as cursor:
+            sql = "UPDATE Review SET Title = %s, Text = %s, Rating = %s, Date = %s WHERE UserName = %s AND HotelName = %s AND CityName = %s;"
+            cursor.execute(sql, (title, text, rating, datetime, user_name, hotel_name, city_name))
+            connection.commit()
+            return JsonResponse({'status': 'success'}, status=201)
+    finally:
+        connection.close()
+
+def delete_review(request):
+    connection = pymysql.connect(host=DB_HOST,
+                                 user=DB_USER,
+                                 password=DB_PASSWORD,
+                                 db=DB_NAME,
+                                 charset='utf8mb4',
+                                 cursorclass=pymysql.cursors.DictCursor)
+    try:
+        query_data = json.loads(request.body.decode('utf-8'))
+        user_name = query_data.get('UserName', '')
+        hotel_name = query_data.get('HotelName', '')
+        city_name = query_data.get('CityName', '')
+        with connection.cursor() as cursor:
+            sql = "DELETE FROM Review WHERE UserName = %s AND HotelName = %s AND CityName = %s;"
+            cursor.execute(sql, (user_name, hotel_name, city_name))
+            connection.commit()
+            return JsonResponse({'status': 'success'}, status=201)
     finally:
         connection.close()
