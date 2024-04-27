@@ -231,7 +231,8 @@ def search_hotel_data(request):
             precipMax = precipitation_threshold[precipitation]
             crimeMax = crime_rate_threshold[crime_rate]
             wageMax = living_wage_threshold[living_Wage]
-            args = [monthMin, monthMax, tempMin, tempMax, precipMax, crimeMax, wageMax]
+            args = [monthMin, monthMax, tempMin, tempMax, precipMax, crimeMax, wageMax, "%" + search_query + "%"]
+            # print(args)
             cursor.callproc('Search', args)
             connection.commit()
             result = cursor.fetchall()
