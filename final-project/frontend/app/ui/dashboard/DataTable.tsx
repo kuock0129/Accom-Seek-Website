@@ -23,7 +23,7 @@ const crimeRateOption = [
 const livingWageOption = [
   { value: 2, label: 'Default' },
   { value: 1, label: 'Medium' },
-  { value: 0, label: 'High' },
+  { value: 0, label: 'Low' },
 ];
 
 const precipitationOption = [
