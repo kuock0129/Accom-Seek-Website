@@ -364,10 +364,10 @@ export default function Page({ params }: { params: any }) {
 
         {/* Reviews */}
         <section aria-labelledby="reviews-heading" className="mt-16 sm:mt-24">
-          <h2 id="reviews-heading" className="text-lg font-medium text-gray-900">
-            Recent reviews
-          </h2>
-            
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h2>Recent reviews</h2>
+        <AddReviewPopup />
+        </div>
           
 
           <div className="mt-6 space-y-10 divide-y divide-gray-200 border-b border-t border-gray-200 pb-10">
@@ -404,10 +404,11 @@ export default function Page({ params }: { params: any }) {
                     <div className='flex gap-2 mt-3'>
                     <Button variant="outlined" color="primary" onClick={handleClickOpen}> Edit</Button>
                     <Button variant="outlined" color="error" onClick={handleClickOpen}> Delete</Button>
-                    <Button variant="contained" onClick={() => setOpen(true)}>Add Review</Button>
-                    <Dialog open={open} onClose={() => setOpen(false)}>
-                      <AddReviewPopup/>
-                    </Dialog>
+                    {/* <Button variant="contained" onClick={handleClickOpen}>Add Review</Button> */}
+                    {/* <Dialog open={open} onClose={() => setOpen(false)}> */}
+                      {/* console.log("OpenAdd review ", open); */}
+                      {/* <AddReviewPopup/> */}
+                    {/* </Dialog> */}
                     </div>
                   </div>
                   

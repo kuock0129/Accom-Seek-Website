@@ -20,10 +20,6 @@ export const getReviewData = async (hotelName: any, cityName: any) => {
 };
 
 
-
-
-
-
 export const getHotelData = async () => {
   try {
     const response = await apiClient.get('get_hotel_data/');
@@ -35,8 +31,11 @@ export const getHotelData = async () => {
 
 export const searchHotelData = async (searchQuery: any, selectedLivingWageOption: any, selectedCrimeRateOption: any, selectedPrecipitationOption: any) => {
   console.log(searchQuery);
+  console.log(selectedLivingWageOption);
+  console.log(selectedCrimeRateOption);
+  console.log(selectedPrecipitationOption);
   try {
-    const response = await apiClient.post('search_hotel_data/', { search: searchQuery, livingWage: selectedLivingWageOption, crimeRate: selectedCrimeRateOption, precipitation: selectedPrecipitationOption});
+    const response = await apiClient.post('search_hotel_data/', { search: searchQuery, livingWage: selectedLivingWageOption.value, crimeRate: selectedCrimeRateOption.value, precipitation: selectedPrecipitationOption.value});
     return response.data.data;
   } catch (error) {
     console.error("Could not fetch hotel data", error);
