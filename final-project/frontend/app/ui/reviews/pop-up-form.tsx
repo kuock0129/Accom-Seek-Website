@@ -25,7 +25,7 @@ const AddReviewPopup: React.FC = () => {
     e.preventDefault();
     try {
       const reviewToSend = { userName, title, rating, text, date, hotelName, cityName };
-      const response = await axios.post('http://localhost:3000/api/reviews', reviewToSend);
+      const response = await axios.post('http://127.0.0.1:8000/add_review/', reviewToSend);
       const savedRecord = response.data;
       setOpen(false); // Close the dialog after submission
     } catch (error) {
@@ -43,7 +43,9 @@ const AddReviewPopup: React.FC = () => {
         <DialogTitle>Add a Review</DialogTitle>
         <form onSubmit={handleSubmit}>
           <DialogContent>
-          <form>
+        <form>
+
+
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">Write your Experience</h2>
@@ -58,7 +60,7 @@ const AddReviewPopup: React.FC = () => {
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">workcation.com/</span>
+                  <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">Name/</span>
                   <input
                     type="text"
                     name="username"

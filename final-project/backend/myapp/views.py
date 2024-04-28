@@ -262,13 +262,19 @@ def add_review(request):
         hotel_name = query_data.get('HotelName', '')
         city_name = query_data.get('CityName', '')
         datetime = datetime.now()
+        print(query_data)
         with connection.cursor() as cursor:
             sql = "INSERT INTO Review (UserName, Title, Text, Rating, Date, HotelName, CityName) VALUES (%s, %s, %s, %s, %s, %s, %s);"
             cursor.execute(sql, (user_name, title, text, rating, datetime, hotel_name, city_name))
             connection.commit()
             return JsonResponse({'status': 'success'}, status=201)
+            
     finally:
         connection.close()
+
+
+
+
 def update_review(request):
     connection = pymysql.connect(host=DB_HOST,
                                  user=DB_USER,
