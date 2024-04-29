@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { Dialog, Popover, RadioGroup, Tab, Transition } from '@headlessui/react'
-import AddReviewPopup from '@/app/ui/reviews/pop-up-form';
+import AddReviewPopup from '@/app/ui/reviews/pop-up-add-form';
 import {
   Bars3Icon,
   CurrencyDollarIcon,
@@ -402,7 +402,7 @@ export default function Page({ params }: { params: any }) {
                       dangerouslySetInnerHTML={{ __html: review.Text }}
                     />
                     <div className='flex gap-2 mt-3'>
-                    <Button variant="outlined" color="primary" onClick={handleClickOpen}> Edit</Button>
+                    <AddReviewPopup cityName={cityName} hotelName={hotelName}/>
                     <Button variant="outlined" color="error" onClick={handleClickOpen}> Delete</Button>
                     {/* <Button variant="contained" onClick={handleClickOpen}>Add Review</Button> */}
                     {/* <Dialog open={open} onClose={() => setOpen(false)}> */}
