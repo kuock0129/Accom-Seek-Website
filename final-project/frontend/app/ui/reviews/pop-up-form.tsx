@@ -7,7 +7,12 @@ import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 
-const AddReviewPopup: React.FC = () => {
+interface AddReviewPopup {
+  cityName: string;
+  hotelName: string;
+}
+
+const AddReviewPopup: React.FC<AddReviewPopup> = ({ cityName , hotelName }) => {
   console.log("OpenAdd Popup ");
   const [open, setOpen] = useState(false);
   const [userName, setUserName] = useState('');
@@ -15,8 +20,8 @@ const AddReviewPopup: React.FC = () => {
   // const [rating, setRating] = useState(0);
   const [text, setText] = useState('');
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
-  const [hotelName, setHotelName] = useState('');
-  const [cityName, setCityName] = useState('');
+  // const [hotelName, setHotelName] = useState('');
+  // const [cityName, setCityName] = useState('');
   const [rating, setRating] = React.useState<number | null>(2);
 
 
@@ -25,8 +30,8 @@ const AddReviewPopup: React.FC = () => {
     e.preventDefault();
     try {
       const reviewToSend = { userName, title, rating, text, date, hotelName, cityName };
+      console.log(reviewToSend)
       const response = await axios.post('http://127.0.0.1:8000/add_review/', reviewToSend);
-      const savedRecord = response.data;
       setOpen(false); // Close the dialog after submission
     } catch (error) {
       console.error(error);
@@ -68,6 +73,7 @@ const AddReviewPopup: React.FC = () => {
                     autoComplete="username"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="kevin"
+                    onChange={(event) => setUserName(event.target.value)}
                   />
                 </div>
               </div>
@@ -182,7 +188,7 @@ const AddReviewPopup: React.FC = () => {
               </label>
 
               <label htmlFor="about" className="mt-3 text-sm leading-6 text-gray-600">
-                Topic
+                Title
               </label>
               <div className="mt-2">
                 <textarea
@@ -191,6 +197,8 @@ const AddReviewPopup: React.FC = () => {
                   rows={1}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   defaultValue={''}
+                  value={title}
+                  onChange={(event) => setTitle(event.target.value)}
                 />
               </div>
               <p className="mt-3 text-sm leading-6 text-gray-600">Write your experience about your hotel.</p>
@@ -200,7 +208,8 @@ const AddReviewPopup: React.FC = () => {
                   name="about"
                   rows={3}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  defaultValue={''}
+                  value={text}
+                  onChange={(event) => setText(event.target.value)}
                 />
               </div>
 

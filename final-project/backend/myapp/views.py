@@ -246,7 +246,10 @@ def search_hotel_data(request):
     finally:
         connection.close()
 
+@csrf_exempt
+@require_http_methods(["POST"])
 def add_review(request):
+    print(request)
     connection = pymysql.connect(host=DB_HOST,
                                  user=DB_USER,
                                  password=DB_PASSWORD,
@@ -255,26 +258,32 @@ def add_review(request):
                                  cursorclass=pymysql.cursors.DictCursor)
     try:
         query_data = json.loads(request.body.decode('utf-8'))
-        user_name = query_data.get('UserName', '')
-        title = query_data.get('Title', '')
-        text = query_data.get('Text', '')
-        rating = query_data.get('Rating', '')
-        hotel_name = query_data.get('HotelName', '')
-        city_name = query_data.get('CityName', '')
-        datetime = datetime.now()
-        print(query_data)
+        user_name = query_data.get('userName', '')
+        title = query_data.get('title', '')
+        text = query_data.get('text', '')
+        rating = float(query_data.get('rating', '0.0'))
+        hotel_name = query_data.get('hotelName', '')
+        city_name = query_data.get('cityName', '')
+        time = datetime.now()
+        print("user_name:", user_name)
+        print("title:", title)
+        print("text:", text)
+        print("rating:", rating)
+        print("hotel_name:", hotel_name)
+        print("city_name:", city_name)
+        print("time:", time)
+
         with connection.cursor() as cursor:
             sql = "INSERT INTO Review (UserName, Title, Text, Rating, Date, HotelName, CityName) VALUES (%s, %s, %s, %s, %s, %s, %s);"
-            cursor.execute(sql, (user_name, title, text, rating, datetime, hotel_name, city_name))
+            cursor.execute(sql, (user_name, title, text, rating, time, hotel_name, city_name))
             connection.commit()
             return JsonResponse({'status': 'success'}, status=201)
             
     finally:
         connection.close()
 
-
-
-
+@csrf_exempt
+@require_http_methods(["POST"])
 def update_review(request):
     connection = pymysql.connect(host=DB_HOST,
                                  user=DB_USER,
@@ -299,6 +308,8 @@ def update_review(request):
     finally:
         connection.close()
 
+@csrf_exempt
+@require_http_methods(["POST"])
 def delete_review(request):
     connection = pymysql.connect(host=DB_HOST,
                                  user=DB_USER,

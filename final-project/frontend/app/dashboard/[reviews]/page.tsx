@@ -366,7 +366,7 @@ export default function Page({ params }: { params: any }) {
         <section aria-labelledby="reviews-heading" className="mt-16 sm:mt-24">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2>Recent reviews</h2>
-        <AddReviewPopup />
+        <AddReviewPopup cityName={cityName} hotelName={hotelName}/>
         </div>
           
 
