@@ -2,7 +2,7 @@
 
 import { lusitana } from '@/app/ui/fonts';
 import '@fontsource/inter';
-import ReviewTable from '@/app/ui/reviews/review-table';
+// import ReviewTable from '@/app/ui/reviews/review-table';
 import { CalendarUI } from '@/app/ui/reviews/calender';
 import { useEffect, useState } from 'react'
 import Stack from '@mui/material/Stack';

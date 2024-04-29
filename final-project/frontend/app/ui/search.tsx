@@ -2,10 +2,10 @@ import { ChangeEvent, FormEvent, FC } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 interface SearchProps {
-  placeholder: string;
-  value: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  onSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  placeholder?: string;
+  value?: string;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onSubmit?: (event: FormEvent<HTMLFormElement>) => void;
 }
 
 const Search: FC<SearchProps> = ({ placeholder, value, onChange, onSubmit }) => {
