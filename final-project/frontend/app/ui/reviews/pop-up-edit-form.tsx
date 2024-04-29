@@ -35,7 +35,8 @@ const EditReviewPopup: React.FC<EditReviewPopup> = ({ cityName, hotelName, origi
     try {
       const reviewToSend = { cityName, hotelName, rating, userName, text, title };
       console.log(reviewToSend)
-      const response = await axios.post('http://127.0.0.1:8000/update_review/', reviewToSend);
+      console.log(process.env.NEXT_PUBLIC_API_URL)
+      const response = await axios.post(`http://${process.env.NEXT_PUBLIC_API_URL}/update_review/`, reviewToSend);
       setOpen(false); // Close the dialog after submission
       window.location.reload();
     } catch (error) {

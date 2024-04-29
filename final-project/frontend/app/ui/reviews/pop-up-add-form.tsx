@@ -31,8 +31,9 @@ const AddReviewPopup: React.FC<AddReviewPopup> = ({ cityName , hotelName }) => {
     try {
       const reviewToSend = { userName, title, rating, text, date, hotelName, cityName };
       console.log(reviewToSend)
-      const response = await axios.post('http://127.0.0.1:8000/add_review/', reviewToSend);
+      const response = await axios.post(`http://${process.env.NEXT_PUBLIC_API_URL}/add_review/`, reviewToSend);
       setOpen(false); // Close the dialog after submission
+      window.location.reload();
     } catch (error) {
       console.error(error);
       alert('An error occurred while adding the review. Please try again.');
