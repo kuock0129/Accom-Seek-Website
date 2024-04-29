@@ -44,23 +44,23 @@ export const searchHotelData = async (searchQuery: any, selectedLivingWageOption
 
 
 
-const deleteReview = async (UserName: string, hotelName: string, cityName: string) => {
+const deleteReview = async (userName: string, hotelName: string, cityName: string) => {
   try {
     const response = await fetch(`http://${process.env.NEXT_PUBLIC_API_URL}/delete_review/`, {
       method: 'POST',
-      body: JSON.stringify({ UserName, hotelName, cityName }),
+      body: JSON.stringify({ userName, hotelName, cityName }),
       headers: {
         'Content-Type': 'application/json'
       }
     });
-
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-
+    window.location.reload();
     // Refresh the page or update the state to reflect the deleted review
   } catch (error) {
     console.error('Error:', error);
+    alert('An error occurred while deleting the review. Please try again.');
   }
 };
 

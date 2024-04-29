@@ -405,7 +405,6 @@ export default function Page({ params }: { params: any }) {
                       dangerouslySetInnerHTML={{ __html: review.Text }}
                     />
                     <div className='flex gap-2 mt-3'>
-<<<<<<< HEAD
                     <EditReviewPopup 
                       cityName={cityName} 
                       hotelName={hotelName} 
@@ -414,16 +413,12 @@ export default function Page({ params }: { params: any }) {
                       Text={review.Text} 
                       Title={review.Title} 
                     />
-                    <Button variant="outlined" color="error" onClick={handleClickOpen}> Delete</Button>
                     {/* <Button variant="contained" onClick={handleClickOpen}>Add Review</Button> */}
                     {/* <Dialog open={open} onClose={() => setOpen(false)}> */}
                       {/* console.log("OpenAdd review ", open); */}
                       {/* <AddReviewPopup/> */}
                     {/* </Dialog> */}
-=======
-                    <AddReviewPopup cityName={cityName} hotelName={hotelName}/>
                     <Button variant="outlined" color="error"  onClick={() => deleteReview(review.UserName, hotelName, cityName)}> Delete</Button>
->>>>>>> f55e192 (api update)
                     </div>
                   </div>
                   

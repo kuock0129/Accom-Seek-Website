@@ -320,9 +320,12 @@ def delete_review(request):
                                  cursorclass=pymysql.cursors.DictCursor)
     try:
         query_data = json.loads(request.body.decode('utf-8'))
-        user_name = query_data.get('UserName', '')
-        hotel_name = query_data.get('HotelName', '')
-        city_name = query_data.get('CityName', '')
+        user_name = query_data.get('userName', '')
+        hotel_name = query_data.get('hotelName', '')
+        city_name = query_data.get('cityName', '')
+        print(user_name)
+        print(hotel_name)
+        print(city_name)
         with connection.cursor() as cursor:
             sql = "DELETE FROM Review WHERE UserName = %s AND HotelName = %s AND CityName = %s;"
             cursor.execute(sql, (user_name, hotel_name, city_name))
