@@ -152,7 +152,3 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-]
