@@ -20,7 +20,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { StarIcon } from '@heroicons/react/20/solid'
-import { getReviewData } from '@/client/api';
+import { getReviewData, deleteReview } from '@/client/api';
 
 
 // Data
@@ -126,6 +126,8 @@ export default function Page({ params }: { params: any }) {
   const handleClose = () => {
     setOpen(false);
   };
+
+
   // New Add 0427 kuock0129
   
   
@@ -403,6 +405,7 @@ export default function Page({ params }: { params: any }) {
                       dangerouslySetInnerHTML={{ __html: review.Text }}
                     />
                     <div className='flex gap-2 mt-3'>
+<<<<<<< HEAD
                     <EditReviewPopup 
                       cityName={cityName} 
                       hotelName={hotelName} 
@@ -417,6 +420,10 @@ export default function Page({ params }: { params: any }) {
                       {/* console.log("OpenAdd review ", open); */}
                       {/* <AddReviewPopup/> */}
                     {/* </Dialog> */}
+=======
+                    <AddReviewPopup cityName={cityName} hotelName={hotelName}/>
+                    <Button variant="outlined" color="error"  onClick={() => deleteReview(review.UserName, hotelName, cityName)}> Delete</Button>
+>>>>>>> f55e192 (api update)
                     </div>
                   </div>
                   
