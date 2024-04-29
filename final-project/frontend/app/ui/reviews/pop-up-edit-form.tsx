@@ -8,33 +8,39 @@ import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 
 interface EditReviewPopup {
-  cityName: string;
-  hotelName: string;
-}
+    cityName: string;
+    hotelName: string;
+    original_Rating: number; 
+    userName: string; 
+    Text: string;
+    Title: string;
+  }
 
-const EditReviewPopup: React.FC<EditReviewPopup> = ({ cityName , hotelName }) => {
-  console.log("OpenAdd Popup ");
+const EditReviewPopup: React.FC<EditReviewPopup> = ({ cityName, hotelName, original_Rating, userName, Text, Title }) => {
+//   console.log("OpenAdd Popup ");
   const [open, setOpen] = useState(false);
-  const [userName, setUserName] = useState('');
-  const [title, setTitle] = useState('');
+//   const [userName, setUserName] = useState(UserName);
+  const [title, setTitle] = useState(Title);
   // const [rating, setRating] = useState(0);
-  const [text, setText] = useState('');
-  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+  const [text, setText] = useState(Text);
+//   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   // const [hotelName, setHotelName] = useState('');
   // const [cityName, setCityName] = useState('');
-  const [rating, setRating] = React.useState<number | null>(2);
+  const [rating, setRating] = React.useState<number | null>(original_Rating);
 
 
   // Function to handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const reviewToSend = { userName, title, rating, text, date, hotelName, cityName };
+      const reviewToSend = { cityName, hotelName, rating, userName, text, title };
       console.log(reviewToSend)
-      const response = await axios.post('http://127.0.0.1:8000/add_review/', reviewToSend);
+      const response = await axios.post('http://127.0.0.1:8000/update_review/', reviewToSend);
       setOpen(false); // Close the dialog after submission
+      window.location.reload();
     } catch (error) {
       console.error(error);
+      alert('An error occurred while updating the review. Please try again.');
     }
   };
 
@@ -45,7 +51,7 @@ const EditReviewPopup: React.FC<EditReviewPopup> = ({ cityName , hotelName }) =>
       </Button>
       {/* Review Form */}
       <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Add a Review</DialogTitle>
+        <DialogTitle>Edit a Review</DialogTitle>
         <form onSubmit={handleSubmit}>
           <DialogContent>
         <form>
@@ -66,15 +72,7 @@ const EditReviewPopup: React.FC<EditReviewPopup> = ({ cityName , hotelName }) =>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">Name/</span>
-                  <input
-                    type="text"
-                    name="username"
-                    id="username"
-                    autoComplete="username"
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="kevin"
-                    onChange={(event) => setUserName(event.target.value)}
-                  />
+                    {userName}
                 </div>
               </div>
             </div>

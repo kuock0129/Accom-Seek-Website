@@ -13,7 +13,7 @@ interface AddReviewPopup {
 }
 
 const AddReviewPopup: React.FC<AddReviewPopup> = ({ cityName , hotelName }) => {
-  console.log("OpenAdd Popup ");
+  // console.log("OpenAdd Popup ");
   const [open, setOpen] = useState(false);
   const [userName, setUserName] = useState('');
   const [title, setTitle] = useState('');
@@ -35,6 +35,7 @@ const AddReviewPopup: React.FC<AddReviewPopup> = ({ cityName , hotelName }) => {
       setOpen(false); // Close the dialog after submission
     } catch (error) {
       console.error(error);
+      alert('An error occurred while adding the review. Please try again.');
     }
   };
 
