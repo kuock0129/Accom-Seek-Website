@@ -5,3 +5,4 @@ venv
 staticfiles
 .next/
 .env.local
+out/

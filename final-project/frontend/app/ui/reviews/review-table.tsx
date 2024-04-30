@@ -24,6 +24,7 @@ export default function ReviewTable({ hotelName, cityName }: ReviewTableProps) {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    if (!hotelName || !cityName) return;
     const fetchData = async () => {
       try {
         const data = await getReviewData(hotelName, cityName);

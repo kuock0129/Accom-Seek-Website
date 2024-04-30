@@ -97,7 +97,7 @@ export default function DataTable() {
   const handleRowClick = (params: { row: { Name: string | number | boolean; CityName: string | number | boolean; }; }) => {
     const hotelName = encodeURIComponent(params.row.Name);
     const cityName = encodeURIComponent(params.row.CityName);
-    const path = `/dashboard/${hotelName}_${cityName}`;
+    const path = `/dashboard/reviews?hotel=${hotelName}&city=${cityName}`;
     window.location.href = path;
   };
 

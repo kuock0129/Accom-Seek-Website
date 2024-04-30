@@ -19,7 +19,7 @@ from django.urls import path, include
 from myapp import views
 from django.contrib.auth import views as auth_views
 
-urlpatterns = [
+api_urlpatterns = [
     path('', views.index, name='index'),
     path('serve-html1/', views.serve_sample1, name='serve_sample1'),
     path('serve-html2/', views.serve_sample2, name='serve_sample2'),
@@ -38,3 +38,7 @@ urlpatterns = [
     path('update_review/', views.update_review, name='update_review'),
     path('delete_review/', views.delete_review, name='delete_review'),
 ]
+
+urlpatterns = [
+    path('api/', include(api_urlpatterns)),
+] 
