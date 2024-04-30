@@ -108,9 +108,9 @@ export default async function Page() {
       <div className="">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Accom-Seek</h1>
+            <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Accom-Seek Website</h1>
             <p className="mt-2 text-lg leading-8 text-gray-600">
-              Learn how to grow your business with our expert advice.
+              Welcome to the Accom-Seek for the Comfortable and Affordable Hotel.
             </p>
           </div>
           <div className="mt-10">

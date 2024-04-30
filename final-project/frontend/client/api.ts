@@ -65,3 +65,14 @@ const deleteReview = async (userName: string, hotelName: string, cityName: strin
 };
 
 export { deleteReview };
+
+
+
+export async function getServerSideProps() {
+  const price = Math.floor(Math.random() * 301) + 100;
+  return {
+    props: {
+      price,
+    },
+  };
+}

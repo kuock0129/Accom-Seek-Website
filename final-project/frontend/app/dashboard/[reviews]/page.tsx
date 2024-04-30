@@ -1,5 +1,7 @@
 'use client';
 
+
+import React from 'react';
 import { lusitana } from '@/app/ui/fonts';
 import '@fontsource/inter';
 // import ReviewTable from '@/app/ui/reviews/review-table';
@@ -27,7 +29,7 @@ import { getReviewData, deleteReview } from '@/client/api';
 
 const product = {
   name: 'Basic Tee',
-  price: `$135`,
+  price: '$135',
   href: '#',
   breadcrumbs: [
     { id: 1, name: 'Women', href: '#' },
@@ -66,16 +68,16 @@ const product = {
     { name: 'XL', inStock: false },
   ],
   description: `
-  The Best Hotels in Nearby Areas.
-`,
+    <p>The Basic tee is an honest new take on a classic. </p>
+  `,
   details: [
     // 'Only the best materials',
   ],
 }
 
 const policies = [
-  { name: 'International Reserve', icon: GlobeAmericasIcon, description: 'Place your order 6 months in advance.' },
-  { name: 'Loyalty rewards', icon: CurrencyDollarIcon, description: "Recive reward for the second order" },
+  { name: 'International delivery', icon: GlobeAmericasIcon, description: 'Get your order in 2 years' },
+  { name: 'Loyalty rewards', icon: CurrencyDollarIcon, description: "Don't look at other tees" },
 ]
 
 
@@ -98,24 +100,8 @@ function classNames(...classes:any[]) {
 
 
 export default function Page({ params }: { params: any }) {
-  
-  const [hotelName, setHotelName] = useState('');
-  const [cityName, setCityName] = useState('');
-
-  useEffect(() => {
-    let param = new URLSearchParams(window.location.search);
-    let hotel = param.get('hotel');
-    let city = param.get('city');
-    if (hotel !== null) {
-      setHotelName(hotel);
-    }
-    if (city !== null) {
-      setCityName(city);
-    }
-  }, []);
-
-  // const path = decodeURIComponent(params.reviews);
-  // const [hotelName, cityName] = path.split('_');
+  const path = decodeURIComponent(params.reviews);
+  const [hotelName, cityName] = path.split('_');
   // New Add   
   const [open, setOpen] = useState(false)
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
@@ -151,7 +137,6 @@ export default function Page({ params }: { params: any }) {
   ///
   useEffect(() => {
     const fetchData = async () => {
-      if (!hotelName || !cityName) return;
       try {
         const data = await getReviewData(hotelName, cityName);
         if (data) {
@@ -163,7 +148,7 @@ export default function Page({ params }: { params: any }) {
             Date: review.Date,
           }));
           setReview(selectreviews);
-          // console.log("Selcet", selectreviews);
+          console.log("Selcet", selectreviews);
         }
       } catch (err) {
         setError('Failed to fetch data');
@@ -188,7 +173,7 @@ export default function Page({ params }: { params: any }) {
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Intro for {hotelName}</h2>
             <p className="mt-2 text-lg leading-8 text-gray-600">
-            Welcome to {hotelName} for the Comfortable and Affordable Hotel.
+            Welcome to the {hotelName} for the Comfortable and Affordable Hotel.
             </p>
           </div>
 
@@ -347,6 +332,18 @@ export default function Page({ params }: { params: any }) {
                 className="prose prose-sm mt-4 text-gray-500"
                 dangerouslySetInnerHTML={{ __html: product.description }}
               />
+            </div>
+
+            <div className="mt-8 border-t border-gray-200 pt-8">
+              <h2 className="text-sm font-medium text-gray-900">Fabric &amp; Care</h2>
+
+              <div className="prose prose-sm mt-4 text-gray-500">
+                <ul role="list">
+                  {product.details.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
             {/* Policies */}

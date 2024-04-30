@@ -17,7 +17,7 @@ export default function Page() {
         <div className="flex flex-col justify-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-2/5 md:px-20">
           <p className={`text-xl text-gray-800 md:text-3xl md:leading-normal`}>
             <strong>Welcome to Accom-Seek.</strong> This is the Search Engine for the{' '}
-            <a href="http://localhost:3000/dashboard" className="text-orange-500">
+            <a href={`http://${process.env.NEXT_PUBLIC_PAGE_URL}/dashboard`} className="text-orange-500">
               Comfortable and Afforable Hotel.
             </a>
           </p>

@@ -8,7 +8,7 @@ export default function SideNav() {
     <div className="flex h-full flex-col px-3 py-4 md:px-2">
       <Link
         className="mb-2 flex h-20 items-end justify-start rounded-md md:h-40" style={{ backgroundImage: `url(../photo/newyork.jpeg)`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-        href="http://localhost:3000/"
+        href={`http://${process.env.NEXT_PUBLIC_PAGE_URL}/dashboard`}
       >
         <div className="w-32 text-white md:w-40">
           <AcmeLogo />
