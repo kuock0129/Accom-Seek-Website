@@ -38,3 +38,7 @@ urlpatterns = [
     path('update_review/', views.update_review, name='update_review'),
     path('delete_review/', views.delete_review, name='delete_review'),
 ]
+
+# urlpatterns = [
+#     path('api/', include(api_urlpatterns)),
+# ] 

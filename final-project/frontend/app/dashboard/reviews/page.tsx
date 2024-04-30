@@ -98,8 +98,24 @@ function classNames(...classes:any[]) {
 
 
 export default function Page({ params }: { params: any }) {
-  const path = decodeURIComponent(params.reviews);
-  const [hotelName, cityName] = path.split('_');
+  
+  const [hotelName, setHotelName] = useState('');
+  const [cityName, setCityName] = useState('');
+
+  useEffect(() => {
+    let param = new URLSearchParams(window.location.search);
+    let hotel = param.get('hotel');
+    let city = param.get('city');
+    if (hotel !== null) {
+      setHotelName(hotel);
+    }
+    if (city !== null) {
+      setCityName(city);
+    }
+  }, []);
+
+  // const path = decodeURIComponent(params.reviews);
+  // const [hotelName, cityName] = path.split('_');
   // New Add   
   const [open, setOpen] = useState(false)
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
@@ -135,6 +151,7 @@ export default function Page({ params }: { params: any }) {
   ///
   useEffect(() => {
     const fetchData = async () => {
+      if (!hotelName || !cityName) return;
       try {
         const data = await getReviewData(hotelName, cityName);
         if (data) {
@@ -146,7 +163,7 @@ export default function Page({ params }: { params: any }) {
             Date: review.Date,
           }));
           setReview(selectreviews);
-          console.log("Selcet", selectreviews);
+          // console.log("Selcet", selectreviews);
         }
       } catch (err) {
         setError('Failed to fetch data');
