@@ -115,7 +115,7 @@ python3 manage.py runserver
 
 
 ## Comtributor ##
-Thanks for my excellent teammate in UIUC MCS:
+Thanks for my excellent teammates in UIUC MCS:
 @ patrick wu
 @ willy cheng
 @ lin-sheng-min
