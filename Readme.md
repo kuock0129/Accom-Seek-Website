@@ -114,7 +114,7 @@ python3 manage.py runserver
 ```
 
 
-** Comtributor **
+## Comtributor ##
 Thanks for my excellent teammate in UIUC MCS:
 @ patrick wu
 @ willy cheng
