@@ -1,5 +1,5 @@
 # Accom-Seek-Website
-This is a platform designed to help users find suitable and affordable accommodation across the United States.
+AccommoSeek is a sophisticated web application designed to help users discover the perfect accommodations tailored to their individual preferences. It offers a highly customizable search experience, allowing users to apply filters such as city, accommodation type, ratings, reviews, desired temperature, travel budget, crime rate and more, ensuring the recommendations align closely with their needs. Additionally, the platform allows users to share their experiences by posting reviews and rating their stays across various aspects, further enriching the community's wealth of information and assisting others in making informed decisions.
 
 # Step-by-Step Guide
 
